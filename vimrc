@@ -2,97 +2,100 @@
 " Installation Instructions
 "	1. Place file in home directory as .vimrc
 "	2. Run the following command in terminal
-"		mkdir .vim .vim/bundle .vim/backup .vim/swap .vim/cache .vim/undo; git clone https://github.com/gmarik/vundle.git .vim/bundle/vundle
+"		mkdir .vim .vim/bundle .vim/backup .vim/swap .vim/cache .vim/undo; git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 "	3. Launch Vim and Run
-"		:BundleInstall
-"	5. Restart Vim
+"		:PluginInstall
+" Or from shell vim +PluginInstall +qall
+"	4. Restart Vim
 
 
-set nocompatible               " be iMproved
-filetype off                   " required!
+set nocompatible              " be iMproved, required
+filetype off                  " required
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 
-" let Vundle manage Vundle
-" required!
-Bundle 'gmarik/vundle'
+" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
 
 "languages
-Bundle 'tpope/vim-rails.git'
+Bundle 'git@github.com:tpope/vim-rails.git'
 Bundle 'git://github.com/tpope/vim-haml.git'
-Bundle 'vim-coffee-script'
-Bundle 'git://github.com/groenewege/vim-less.git'
+Bundle 'git@github.com:kchmck/vim-coffee-script.git'
 Bundle 'git@github.com:othree/html5.vim.git'
 Bundle 'git@github.com:hail2u/vim-css3-syntax.git'
-Bundle 'git@github.com:nono/vim-handlebars.git'
 
 "formating text
-Bundle 'godlygeek/tabular'
-Bundle 'surround.vim'
+Bundle 'git@github.com:godlygeek/tabular.git'
+Bundle 'git@github.com:tpope/vim-surround.git'
 
-"extrat parto of files with diferent sintax
+"extract part of files with different syntax
 Bundle 'git@github.com:vim-scripts/SyntaxRange.git'
 
-"comenting lines
-Bundle "tComment"
+" Commenting lines
+Bundle 'git@github.com:tomtom/tcomment_vim.git'
 
-" Snipmate an d all its dependencies
+" Snipmate and all its dependencies
 Bundle "git@github.com:MarcWeber/vim-addon-mw-utils.git"
 Bundle "git@github.com:tomtom/tlib_vim.git"
 Bundle "git@github.com:garbas/vim-snipmate.git"
 Bundle "git@github.com:honza/vim-snippets.git"
 
-"sintax check
-Bundle 'scrooloose/syntastic'
+" Syntax check
+Bundle 'git@github.com:scrooloose/syntastic.git'
 
-"file explorer
-Bundle 'git@github.com:kien/ctrlp.vim.git'
-let mapleader = ","
-noremap <NL> :CtrlP<Cr>
-"colorscheme
+" File explorer
+Bundle 'git@github.com:Shougo/unite.vim.git'
+Bundle 'git@github.com:Shougo/neomru.vim.git'
+Bundle 'git@github.com:Shougo/vimproc.vim.git'
+
+" Colorscheme
 Bundle 'git@github.com:altercation/vim-colors-solarized.git'
-"autoclouse
-Bundle 'HTML-AutoCloseTag'
-Bundle 'delimitMate.vim'
-"markdown
-Bundle 'https://github.com/tpope/vim-markdown'
 
-"Better satatus line
+" Autoclose
+Bundle 'git@github.com:Raimondi/delimitMate.git'
+
+" Markdown support
+Bundle 'git@github.com:tpope/vim-markdown.git'
+
+" Better status line
 Bundle "git@github.com:itchyny/lightline.vim.git"
 
-" Git suppert
+" Git support
 Bundle "git@github.com:tpope/vim-fugitive.git"
 
-" Gundo
+" Undo branching
 Bundle "git@github.com:sjl/gundo.vim.git"
 
-"ctags ruby
+" ctags ruby
 Bundle "git@github.com:tpope/vim-bundler.git"
 
-" multiple cursors
+" Multiple cursors
 Bundle "git@github.com:terryma/vim-multiple-cursors.git"
 
-"grep
-Bundle "git@github.com:dkprice/vim-easygrep.git"
+" Grep
+Bundle "git@github.com:rking/ag.vim.git"
 
-" indentation lines
+" Indentation lines
 Bundle "git@github.com:nathanaelkane/vim-indent-guides.git"
 
+call vundle#end()             " required
 filetype plugin indent on     " required!
 "
 " Brief help
-" :BundleList          - list configured bundles
-" :BundleInstall(!)    - install(update) bundles
-" :BundleSearch(!) foo - search(or refresh cache first) for foo
-" :BundleClean(!)      - confirm(or auto-approve) removal of unused bundles
+"
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
 "
 " see :h vundle for more details or wiki for FAQ
 " NOTE: comments after Bundle command are not allowed..
 
 set t_Co=256
 syntax enable
-set background=light
+set background=dark
 :com -range JS <line1>,<line2>SyntaxInclude javascript
 :com -range CSS <line1>,<line2>SyntaxInclude css
 set colorcolumn=80
@@ -104,14 +107,40 @@ set tabstop=2
 
 " Spaces instead of tabs
 set expandtab
-" Indentation grid
 
-" EAsyGrep config
-let g:EasyGrepCommand=1
-let g:EasyGrepRecursive=1
-let g:EasyGrepJumpToMatch=1
+" Ignore files
+set wildignore+=*/bower_vendor_libs/**
+set wildignore+=*/vendor/**
 
-au BufRead,BufNewFile *.hjs set filetype=handlebars
+" Unite config
+let mapleader = ","
+noremap <NL> :Unite -start-insert file_rec/async:!<cr>
+noremap <space>/ :Unite grep:.<cr>
+let g:unite_prompt='» '
+let g:unite_source_grep_command = 'ag'
+let g:unite_source_file_rec_max_cache_files = 0
+let g:unite_source_history_yank_enable = 1
+let g:unite_source_rec_async_command= 'ag -p ~/.agignore --nocolor --nogroup -g ""'
+let g:unite_source_rec_async_command='ag --nocolor --nogroup --ignore ".hg" --ignore ".svn" --ignore ".git" --ignore ".bzr" --hidden -g ""'
+call unite#set_profile('files', 'context.smartcase', 1)
+call unite#set_profile('files', 'context.ignorecase', 1)
+call unite#filters#matcher_default#use(['matcher_fuzzy'])
+call unite#filters#sorter_default#use(['sorter_rank'])
+call unite#custom_source('file_rec,file_rec/async', 'matchers',
+            \ ['converter_relative_word', 'matcher_default',
+            \  'sorter_default', 'converter_relative_abbr'])
+call unite#custom_source('file_rec,file_rec/async', 'converters', ['sorter_rank', 'sorter_word'])
+call unite#custom#source('file_rec,file_rec/async', 'ignore_globs',
+    \ split(&wildignore, ','))
+
+" Custom mappings for the unite buffer
+autocmd FileType unite call s:unite_settings()
+function! s:unite_settings()
+  " Enable navigation with control-j and control-k in insert mode
+  imap <buffer> <C-j>   <Plug>(unite_select_next_line)
+  imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
+  imap <buffer> <C-v>   <Tab>vsplit<CR>
+endfunction
 
 " lightline config
 set laststatus=2
@@ -131,8 +160,8 @@ let g:lightline = {
       \   'fileencoding': 'MyFileencoding',
       \   'mode': 'MyMode',
       \ },
-      \ 'separator': { 'left': '⮀', 'right': '⮂' },
-      \ 'subseparator': { 'left': '⮁', 'right': '⮃' }
+      \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2"},
+      \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" }
       \ }
 
 function! MyModified()
@@ -140,7 +169,7 @@ function! MyModified()
 endfunction
 
 function! MyReadonly()
-  return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? '⭤' : ''
+  return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? "\ue0a2" : ''
 endfunction
 
 function! MyFilename()
@@ -153,7 +182,7 @@ function! MyFilename()
 endfunction
 
 function! MyFugitive()
-  return &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head') && strlen(fugitive#head()) ? '⭠ '.fugitive#head() : ''
+  return &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head') && strlen(fugitive#head()) ? "\ue0a0".fugitive#head() : ''
 endfunction
 
 function! MyFileformat()
@@ -173,6 +202,8 @@ function! MyMode()
 endfunction
 
 " set color scheme
+set t_Co=256
+set background=dark
 colorscheme solarized
 
 " Gundo map
