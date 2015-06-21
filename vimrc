@@ -127,3 +127,6 @@ autocmd BufWinLeave * call clearmatches()
 autocmd BufWinEnter * :IndentGuidesEnable
 
 autocmd BufWritePre * :%s/\s\+$//e
+
+au BufRead,BufNewFile *.scss set filetype=scss.css
+autocmd FileType scss set iskeyword+=-

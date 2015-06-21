@@ -11,11 +11,13 @@
 call plug#begin('~/.vim/bundle')
 
 "languages
-Plug 'git://github.com/tpope/vim-rails.git'
-Plug 'git://github.com/tpope/vim-haml.git'
+Plug 'git://github.com/tpope/vim-rails.git', { 'for': [ 'ruby', 'eruby' ] }
+Plug 'git://github.com/tpope/vim-haml.git', { 'for': 'haml' }
 Plug 'git://github.com/kchmck/vim-coffee-script.git'
-Plug 'git://github.com/othree/html5.vim.git'
-Plug 'git://github.com/hail2u/vim-css3-syntax.git'
+Plug 'git://github.com/othree/html5.vim.git', { 'for': [ 'html', 'eruby', 'haml' ] }
+Plug 'git://github.com/hail2u/vim-css3-syntax.git', { 'for': [ 'css', 'scss' ] }
+Plug 'git://github.com/JulesWang/css.vim.git', { 'for': [ 'css', 'scss' ] }
+Plug 'git://github.com/cakebaker/scss-syntax.vim.git', { 'for': [ 'css', 'scss' ] }
 
 "formating text
 Plug 'git://github.com/godlygeek/tabular.git'
@@ -39,7 +41,7 @@ Plug 'git://github.com/scrooloose/syntastic.git'
 " File explorer
 Plug 'git://github.com/Shougo/unite.vim.git'
 Plug 'git://github.com/Shougo/neomru.vim.git'
-Plug 'git://github.com/Shougo/vimproc.vim.git'
+Plug 'git://github.com/Shougo/vimproc.vim.git', {'do': 'make'}
 
 " Colorscheme
 Plug 'git://github.com/altercation/vim-colors-solarized.git'
@@ -48,7 +50,7 @@ Plug 'git://github.com/altercation/vim-colors-solarized.git'
 Plug 'git://github.com/Raimondi/delimitMate.git'
 
 " Markdown support
-Plug 'git://github.com/tpope/vim-markdown.git'
+Plug 'git://github.com/tpope/vim-markdown.git', { 'for': 'markdown' }
 
 " Better status line
 Plug 'git://github.com/itchyny/lightline.vim.git'
@@ -57,7 +59,7 @@ Plug 'git://github.com/itchyny/lightline.vim.git'
 Plug 'git://github.com/tpope/vim-fugitive.git'
 
 " Undo branching
-Plug 'git://github.com/sjl/gundo.vim.git'
+Plug 'git://github.com/sjl/gundo.vim.git', { 'on': 'GundoToggle' }
 
 " ctags ruby
 Plug 'git://github.com/tpope/vim-bundler.git'
@@ -66,7 +68,7 @@ Plug 'git://github.com/tpope/vim-bundler.git'
 Plug 'git://github.com/terryma/vim-multiple-cursors.git'
 
 " Grep
-Plug 'git://github.com/rking/ag.vim.git'
+Plug 'git://github.com/rking/ag.vim.git', { 'on': 'Ag' }
 
 " Indentation lines
 Plug 'git://github.com/nathanaelkane/vim-indent-guides.git'
