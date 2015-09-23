@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-VIMRC_FILE=https://raw.githubusercontent.com/groteck/vim/vim-plug/vimrc
-VIM_PLUGINS_FILE=https://raw.githubusercontent.com/groteck/vim/vim-plug/bundles.vim
+VIMRC_FILE=https://raw.githubusercontent.com/groteck/vim-config/master/vimrc
+VIM_PLUGINS_FILE=https://raw.githubusercontent.com/groteck/vim-config/master/bundles.vim
 
 mkdir .vim .vim/bundle .vim/backup .vim/swap .vim/cache .vim/undo &&
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
