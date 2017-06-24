@@ -8,6 +8,7 @@ set shiftwidth=2
 
 " I like 2 stops
 set tabstop=2
+set softtabstop=2
 
 " Spaces instead of tabs
 set expandtab
@@ -97,3 +98,12 @@ autocmd FileType scss set iskeyword+=-
 
 "NerdTree
 map <C-n> :NERDTreeToggle<CR>
+
+" Syntastic
+let g:syntastic_javascript_checkers = ['eslint']
+
+" Markdown spell
+autocmd FileType gitcommit setlocal spell
+autocmd BufRead,BufNewFile *.md setlocall spell
+set complete+=kspell
+autocmd BufRead,BufNewFile *.md setlocall complete+=kspell
