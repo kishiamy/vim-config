@@ -20,16 +20,14 @@ set wildignore+=*/vendor/**
 " lightline config
 set laststatus=2
 let g:lightline = {
-      \ 'colorscheme': 'solarized_dark',
+      \ 'colorscheme': 'solarized',
       \ 'mode_map': { 'c': 'NORMAL' },
       \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ]
+      \   'left': [ [ 'mode', 'paste' ], [ 'relativepath' ] ]
       \ },
       \ 'component_function': {
       \   'modified': 'MyModified',
       \   'readonly': 'MyReadonly',
-      \   'fugitive': 'MyFugitive',
-      \   'filename': 'MyFilename',
       \   'fileformat': 'MyFileformat',
       \   'filetype': 'MyFiletype',
       \   'fileencoding': 'MyFileencoding',
@@ -45,19 +43,6 @@ endfunction
 
 function! MyReadonly()
   return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? "\ue0a2" : ''
-endfunction
-
-function! MyFilename()
-  return ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
-        \ (&ft == 'vimfiler' ? vimfiler#get_status_string() :
-        \  &ft == 'unite' ? unite#get_status_string() :
-        \  &ft == 'vimshell' ? vimshell#get_status_string() :
-        \ '' != expand('%:t') ? expand('%:t') : '[No Name]') .
-        \ ('' != MyModified() ? ' ' . MyModified() : '')
-endfunction
-
-function! MyFugitive()
-  return &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head') && strlen(fugitive#head()) ? "\ue0a0".fugitive#head() : ''
 endfunction
 
 function! MyFileformat()
@@ -83,6 +68,7 @@ colorscheme solarized
 
 " highlight search
 set hlsearch
+
 " highlight existing trailing whitespace and also strip trailing whitespace
 highlight ExtraWhitespace ctermbg=red guibg=red
 match ExtraWhitespace /\s\+$/
@@ -99,11 +85,26 @@ autocmd FileType scss set iskeyword+=-
 "NerdTree
 map <C-n> :NERDTreeToggle<CR>
 
-" Syntastic
+" Syntastic and mustache
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
 let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_handlebars_checkers = ['handlebars']
+let g:syntastic_javascript_eslint_exec = 'eslint_d'
+let g:mustache_abbreviations = 1
+let g:syntastic_error_symbol = "✗"
+let g:syntastic_warning_symbol = "⚠"
 
 " Markdown spell
 autocmd FileType gitcommit setlocal spell
 autocmd BufRead,BufNewFile *.md setlocall spell
 set complete+=kspell
 autocmd BufRead,BufNewFile *.md setlocall complete+=kspell
+
+" Pathogen
+execute pathogen#infect()
